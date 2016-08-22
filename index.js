@@ -32,9 +32,12 @@ module.exports = function (app, options) {
 };
 
 function formatPath(filePath, root, wildcard) {
-  return filePath
-    .replace(path.join(process.cwd(), root), '')
-    .replace(/\\/g, '/')
-    .replace(new RegExp('/\\' + wildcard, 'g'), '/:')
-    .split('.')[0];
+    if (!path.isAbsolute(root)) {
+      root = path.join(process.cwd(), root);
+    }
+    return filePath
+        .replace(root, '')
+        .replace(/\\/g, '/')
+        .replace(new RegExp('/\\' + wildcard, 'g'), '/:')
+        .split('.')[0];
 }
