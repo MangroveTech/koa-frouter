@@ -32,17 +32,12 @@ module.exports = function (app, options) {
 };
 
 function formatPath(filePath, root, wildcard) {
-    if (!isAbsolutePath(root)) {
-        root = path.join(process.cwd(), root);
+    if (!path.isAbsolute(root)) {
+      root = path.join(process.cwd(), root);
     }
     return filePath
         .replace(root, '')
         .replace(/\\/g, '/')
         .replace(new RegExp('/\\' + wildcard, 'g'), '/:')
         .split('.')[0];
-}
-
-function isAbsolutePath(path) {
-    let rex = new RegExp(/^[A-Za-z]\:/);
-    return rex.test(path);
 }
