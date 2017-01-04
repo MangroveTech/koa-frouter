@@ -15,6 +15,7 @@ router(app, options)
 - options: {Object|String->root}
   - root: {String} router directory
   - wildcard: {String} will replace it with ':'
+  - filePattern: {RegExp} default /\.js$/
 
 ### Example
 

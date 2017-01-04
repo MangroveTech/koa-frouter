@@ -10,13 +10,15 @@ module.exports = function (app, options) {
     throw new Error('`root` config required.');
   }
   var wildcard = options.wildcard || '*';
+  var filePattern = options.filePattern || /\.js$/;
   var root = options.root;
 
   //rewrite / to /index
   app.use(rewrite('/', '/index'));
 
   ls(root).forEach(function (filePath) {
-    if (path.extname(filePath) !== '.js') {
+    var isMatch = filePattern.test(filePath);
+    if (!isMatch) {
       return;
     }
     var exportFuncs = require(filePath);
